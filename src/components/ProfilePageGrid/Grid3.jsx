@@ -16,7 +16,10 @@ const ProfileGrid3 = () => {
     currentPassword: Yup.string().required('Current Password is required'),
     password: Yup.string()
       .required('New Password is required')
-      .min(8, 'Min 8 characters long'),
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6,}$/,
+        'Min 6 Char, 1 Cap, 1 Symbol'
+      ),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required('Confirm Password is required'),

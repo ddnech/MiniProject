@@ -16,7 +16,7 @@ const EditProfile = () => {
   });
 
   const handleSubmit = (values) => {
-    console.log(values); // Replace with your logic to update user data
+    console.log(values);
   };
 
   return (

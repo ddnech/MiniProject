@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Grid4 = () => {
   const [errMsg, setErrMsg] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
   const [categories, setCategories] = useState([]);
   const token = useSelector((state) => state.tokenAuth.token);
 
@@ -68,8 +68,12 @@ const Grid4 = () => {
       content: Yup.string()
         .required('Content is required')
         .max(255, 'Content must be 255 characters or less'),
-      CategoryId: Yup.string().required('Category is required'),
-      image: Yup.mixed().required('Image is required'),
+      country: Yup.string().required('Country is required'),
+      CategoryId: Yup.string().test(
+        'required',
+        'Category is required',
+        (value) => value !== 'Select Category'
+      ),
     }),
   });
 
@@ -108,7 +112,7 @@ const Grid4 = () => {
           </div>
 
           <div className="flex flex-col">
-            <label className="block font-medium mb-2">Content</label>
+            <label className="block font-medium mb-2">Content (Max 255 words)</label>
             <textarea
               onChange={handleForm}
               name="content"
@@ -131,6 +135,9 @@ const Grid4 = () => {
               autoComplete="off"
               value={formik.values.country}
             />
+            {formik.touched.country && formik.errors.country && (
+              <p className="text-red-500 mt-1">{formik.errors.country}</p>
+            )}
           </div>
 
           <div className="flex flex-col">
@@ -141,7 +148,7 @@ const Grid4 = () => {
               className="border rounded-md py-2 px-3 w-full"
               value={formik.values.CategoryId}
             >
-              <option value="">Select Category</option>
+              <option value="Select Category">Select Category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -163,6 +170,9 @@ const Grid4 = () => {
               autoComplete="off"
               value={formik.values.url}
             />
+            {formik.touched.url && formik.errors.url && (
+              <p className="text-red-500 mt-1">{formik.errors.url}</p>
+            )}
           </div>
 
           <div className="flex flex-col">
@@ -175,6 +185,9 @@ const Grid4 = () => {
               autoComplete="off"
               value={formik.values.keywords}
             />
+            {formik.touched.keywords && formik.errors.keywords && (
+              <p className="text-red-500 mt-1">{formik.errors.keywords}</p>
+            )}
           </div>
 
           <div className="flex flex-col">
@@ -185,9 +198,6 @@ const Grid4 = () => {
               accept="image/*"
               onChange={handleFile}
             />
-            {formik.touched.image && formik.errors.image && (
-              <p className="text-red-500 mt-1">{formik.errors.image}</p>
-            )}
           </div>
 
           <div className="flex justify-end">

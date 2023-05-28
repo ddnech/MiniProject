@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FaHeart } from 'react-icons/fa';
 
 const Top5 = () => {
   const [articles, setArticles] = useState([]);
@@ -13,11 +14,27 @@ const Top5 = () => {
         const response = await axios.get(
           'https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav'
         );
-        if (Array.isArray(response.data.result)) {
-          setArticles(response.data.result.slice(0, 8).reverse());
-        } else {
-          console.log('Invalid response:', response.data);
-        }
+
+        const articlesWithImage = await Promise.all(
+          response.data.result.map(async (article) => {
+            const imageResponse = await axios.get(
+              `https://minpro-blog.purwadhikabootcamp.com/api/blog/${article.id}`
+            );
+            const updatedArticle = {
+              id: article.id,
+              total_fav: article.total_fav,
+              title: article.title,
+              imageURL: '',
+              category: article.Category.name,
+            };
+            if (imageResponse.data && imageResponse.data[0].imageURL) {
+              updatedArticle.imageURL = `https://minpro-blog.purwadhikabootcamp.com/${imageResponse.data[0].imageURL}`;
+            }
+            return updatedArticle;
+          })
+        );
+
+        setArticles(articlesWithImage);
       } catch (error) {
         console.log(error);
       }
@@ -42,7 +59,6 @@ const Top5 = () => {
       <div className='max-w-[1640px] mx-auto p-4 py-5'>
         <Carousel
           showArrows
-          infiniteLoop
           centerMode
           centerSlidePercentage={33.33}
           showStatus={false}
@@ -58,12 +74,18 @@ const Top5 = () => {
             <div key={article.id} className='rounded-xl relative gap-3'>
               <div className='absolute inset-0 bg-black/50 text-white flex flex-col justify-end p-4'>
                 <p className='font-bold text-xs px-2 pt-3'>{article.title}</p>
-                <p className='px-2'>{article.Category.name}</p>
-                <Link to={`/blog/${article.id}/${article.id}`} className='border-white bg-gray-200 text-black mt-2'>Read</Link>
+                <p className='px-2'>{article.category}</p>
+                <div className='flex items-center mt-2'>
+                  <FaHeart color='red' size={16} className='mr-1' />
+                  <span>{article.total_fav}</span>
+                </div>
+                <Link to={`/blog/${article.id}/${article.id}`} className='border-white bg-gray-200 text-black mt-2'>
+                  Read
+                </Link>
               </div>
               <img
                 className='max-w-full h-52 md:h-64 object-cover rounded-xl'
-                src={article.image || ''}
+                src={article.imageURL}
                 onError={handleImageError}
                 alt={article.title}
               />

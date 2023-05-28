@@ -38,9 +38,9 @@ const ProfileGrid2 = ({ userData }) => {
           },
         }
       );
-      console.log(response.data); // Handle success condition
+      console.log(response.data);
     } catch (error) {
-      console.error(error); // Handle error condition
+      console.error(error);
     }
   };
 
@@ -60,13 +60,11 @@ const ProfileGrid2 = ({ userData }) => {
           },
         }
       );
-      console.log(response.data); // Handle success condition
+      console.log(response.data);
     } catch (error) {
-      console.error(error); // Handle error condition
+      console.error(error);
     }
   };
-
-  //PHONE
 
   const handlePhoneUpdate = async (values) => {
     try {
@@ -82,9 +80,9 @@ const ProfileGrid2 = ({ userData }) => {
           },
         }
       );
-      console.log(response.data); // Handle success condition
+      console.log(response.data);
     } catch (error) {
-      console.error(error); // Handle error condition
+      console.error(error);
     }
   };
 

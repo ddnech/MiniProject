@@ -49,8 +49,6 @@ const SignUp = () => {
         resetForm();
         setStatus({ success: true, token });
         setStatus({ success: true, message: 'Sign up successful. Please check your email for verification.' });
-
-        // Navigate to '/home' after 3 seconds
         setTimeout(() => {
           navigate('/home'); 
         }, 3000);

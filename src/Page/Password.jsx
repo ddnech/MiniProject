@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProfileGrid1 from '../components/ProfilePageGrid/Grid1';
 import ProfileGrid3 from '../components/ProfilePageGrid/Grid3';
 
 const Password = () => {

@@ -15,7 +15,6 @@ import Passwords from './Page/PasswordPage';
 import CreateBlog from './components/CreateBlog';
 import SingleArticle from './components/SingleArticle';
 import MyBlogs from './components/MyBlogs';
-import Forgot from './components/ProfilePageGrid/Forgot';
 import LikedBlogs from './components/LikeBlog';
 
 const App = () => {
@@ -42,7 +41,6 @@ const App = () => {
           <Route path="/EditBlog" element={<CreateBlog />} />
           <Route path="/blog/:id/:BlogId" element={<SingleArticle />} />
           <Route path="/myblogs" element={<MyBlogs />} />
-          {/* <Route path="/Forgot" element={<Forgot />} /> */}
           <Route path="/likeblogs" element={<LikedBlogs />} />
         </Routes>
       </Router>

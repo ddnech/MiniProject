@@ -35,7 +35,7 @@ const CatColumn = () => {
   };
 
   const handleCategoryClick = () => {
-    //later fill to change list according to specific categories//
+    //unused searchbar implement//
   };
 
   return (

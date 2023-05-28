@@ -15,7 +15,7 @@ export default function EmailVerification () {
         .then(() => {
             setVerify(true)})
         .catch(() => setError(true))
-    }, [])
+    },)
 
     return (
         <div className='w-screen h-screen grid content-center justify-center'>
